@@ -14,5 +14,20 @@
 
 2. 简单的例子说明
 
-![gan-example-1](figures/gan1.png)
-![gan-example-2](figures/gan2.png)
+![gan-example-1](../figures/gan1.png)
+![gan-example-2](../figures/gan2.png)
+
+且看上面四张图a,b,c,d. 黑色的点状线代表M所产生的一些数据，红色的线代表我们自己模拟的分布G，蓝色的线代表着分类模型D。
+
+a图表示初始状态，b图表示，保持G不动，优化D，直到分类的准确率最高。
+c图表示保持D不动，优化G，直到混淆程度最高。d图表示，多次迭代后，终于使得G能够完全你和M产生的数据，从而认为，G就是M。
+
+3. 形式化
+
+<img src="http://chart.googleapis.com/chart?cht=tx&chl=min_G max_D V(D,G)=E_{x~p_{data}(x)}\[logD(x)\]+E_{z~p_{z(x)}\[log(1-D(G(z)))\]" style="border:none;">
+
+
+将上述例子所描述的过程公式化，得到如上公式。公式中D(x)表示x属于分布M的概率，因而，优化D的时候就是让V(D,G)最大，优化G的时候就是让V(D,G)最小。
+
+其中，x~pdata(x) 表示x取自真正的分布。
+z~pz(z) 表示z取自我们模拟的分布。G表示生成模型，D表示分类模型。
