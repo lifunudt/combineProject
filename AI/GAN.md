@@ -24,10 +24,23 @@ c图表示保持D不动，优化G，直到混淆程度最高。d图表示，多�
 
 3. 形式化
 
-<img src="http://chart.googleapis.com/chart?cht=tx&chl= min_G max_D V(D,G)=E_{x\~p_{data}(x)}[logD(x)]+E_{z\~p_{z(x)}[log(1-D(G(z)))]" style="border:none;">
-
+<img src="http://chart.googleapis.com/chart?cht=tx&chl= min_G max_D V(D,G)=E_{x\~p_{data}(x)}[logD(x)]+E_{z\~p_{z(x)}}[log(1-D(G(z)))]" style="border:none;">
 
 将上述例子所描述的过程公式化，得到如上公式。公式中D(x)表示x属于分布M的概率，因而，优化D的时候就是让V(D,G)最大，优化G的时候就是让V(D,G)最小。
 
 其中，x\~pdata(x) 表示x取自真正的分布。
 z\~pz(z) 表示z取自我们模拟的分布。G表示生成模型，D表示分类模型。
+
+![gan-algorithm](../figures/gan4.png)
+
+上述即是G和D的训练过程。其中在每次迭代中，梯度下降K次来训练D，然后梯度下降一次来训练G，之所以这样做，是因为D的训练是一个非常耗时的操作，且在有限的集合上，训练次数过多容易过拟合。
+
+4. 优势和劣势
+
+* 优势：
+  - Markov链不需要了，只需要后向传播就可以了。
+  - 生成网络不需要直接用样本来更新了，这是一个可能存在的优势。
+  - 对抗网络的表达能力更强劲，而基于Markov链的模型需要分布比较模糊才能在不同的模式间混合。
+* 劣势：
+  - 对于生成模型，没有直接的表达，而是由一些参数控制。
+  - D需要和G同步的很好才可以。
